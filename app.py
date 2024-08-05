@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from prediction import predict_inflation
 
 st.set_page_config(layout="wide")
 
@@ -34,6 +35,30 @@ df['month_name'] = df['month'].map(month_names)
 st.sidebar.header('Filter Data')
 selected_year = st.sidebar.selectbox('Pilih Tahun', options=df['year'].unique())
 
+st.sidebar.header("Inflation Prediction")
+
+# Input for month
+month = st.sidebar.selectbox(
+    'Select Month',
+    ['January', 'February', 'March', 'April', 'May', 'June', 
+     'July', 'August', 'September', 'October', 'November', 'December']
+)
+
+# Convert month name to number
+month_to_num = {
+    'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+    'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+}
+month_num = month_to_num[month]
+
+# Input for year
+year = st.sidebar.number_input('Enter Year', min_value=1900, max_value=2100, step=1, value=2024)
+
+if st.sidebar.button('Predict Inflation'):
+    predicted_inflation = predict_inflation(year, month_num)
+    st.sidebar.write("Predicted inflation for")
+    st.sidebar.write(f"{month} - {year}: {predicted_inflation:.2f}%")
+
 # Filter dataset based on selected year
 filtered_df = df[df['year'] == selected_year]
 
@@ -41,12 +66,14 @@ filtered_df = df[df['year'] == selected_year]
 filtered_df = filtered_df.sort_values(by='periode_inflasi')
 
 # Create two columns for layout
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([2,3])
 
 with col1:
     # Display the dataset with month names
     st.subheader('Data Inflasi')
-    st.table(filtered_df[['month_name', 'data_inflasi']])
+    # st.table(filtered_df[['month_name', 'data_inflasi']])
+    # st.dataframe(filtered_df[['month_name', 'data_inflasi']], hide_index=True)
+    st.markdown(filtered_df[['month_name', 'data_inflasi']].style.hide(axis="index").to_html(), unsafe_allow_html=True)
 
 with col2:
     # Display a line chart for data_inflasi over time
