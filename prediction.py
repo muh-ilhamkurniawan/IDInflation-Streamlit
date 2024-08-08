@@ -1,7 +1,6 @@
 import pandas as pd
 import joblib
 
-
 # Function to predict inflation based on year and month
 def predict_inflation(year, month):
     # Load the model

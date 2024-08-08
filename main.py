@@ -11,27 +11,27 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 # Load the dataset from a CSV file
 df = pd.read_csv('data_inflasi_indonesia_clean.csv')
 
-# Convert 'periode_inflasi' column to datetime format
-df['periode_inflasi'] = pd.to_datetime(df['periode_inflasi'], format='%m/%d/%Y')
+# Convert 'inflation_period' column to datetime format
+df['inflation_period'] = pd.to_datetime(df['inflation_period'], format='%m/%d/%Y')
 
 # Extract year and month for filtering purposes
-df['year'] = df['periode_inflasi'].dt.year
-df['month'] = df['periode_inflasi'].dt.month
+df['year'] = df['inflation_period'].dt.year
+df['month'] = df['inflation_period'].dt.month
 
-# Clean 'data_inflasi' column by removing '%' and converting to float
-df['data_inflasi'] = df['data_inflasi'].str.rstrip('%').astype(float)
+# Clean 'inflation_data' column by removing '%' and converting to float
+df['inflation_data'] = df['inflation_data'].str.rstrip('%').astype(float)
 
-# Define month names in Indonesian for display purposes
+# Define month names in English for display purposes
 month_names = {
-    1: 'Januari', 2: 'Februari', 3: 'Maret', 4: 'April', 5: 'Mei', 6: 'Juni',
-    7: 'Juli', 8: 'Agustus', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Desember'
+    1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June',
+    7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'
 }
 
 # Map month numbers to month names
 df['month_name'] = df['month'].map(month_names)
 
 # Set the title of the Streamlit app
-st.title('Visualisasi Data Inflasi Indonesia')
+st.title('Visualization of Indonesian Inflation Data')
 
 # Layout configuration with two columns
 col1, col2 = st.columns([3, 1])
@@ -43,13 +43,13 @@ with col1:
         
         with col11:
             # Dropdown for selecting year
-            selected_year = st.selectbox('Inflasi per Tahun', options=df['year'].unique())
+            selected_year = st.selectbox('Inflation by Year', options=df['year'].unique())
                 
         # Filter dataset based on selected year
         filtered_df = df[df['year'] == selected_year]
 
-        # Sort the filtered dataset by 'periode_inflasi' from earliest to latest
-        filtered_df = filtered_df.sort_values(by='periode_inflasi')
+        # Sort the filtered dataset by 'inflation_period' from earliest to latest
+        filtered_df = filtered_df.sort_values(by='inflation_period')
 
         # Second container for displaying data and graph
         col13, col14 = st.columns([1, 2])
@@ -57,16 +57,16 @@ with col1:
         with col13:
             # Display the filtered data in a table
             with st.container():
-                st.subheader('Data Inflasi')
-                st.table(filtered_df[['month_name', 'data_inflasi']])
+                st.subheader('Inflation Data')
+                st.table(filtered_df[['month_name', 'inflation_data']])
         
         with col14:
             # Display a line chart of the filtered data
             with st.container():
-                st.subheader('Grafik Data Inflasi')
+                st.subheader('Inflation Data Chart')
                 fig, ax = plt.subplots(figsize=(10, 6))
-                sns.lineplot(data=filtered_df, x='month_name', y='data_inflasi', ax=ax)
-                ax.set(title='Inflasi dari Waktu ke Waktu', xlabel='Bulan', ylabel='Inflasi (%)')
+                sns.lineplot(data=filtered_df, x='month_name', y='inflation_data', ax=ax)
+                ax.set(title='Inflation Over Time', xlabel='Month', ylabel='Inflation (%)')
                 st.pyplot(fig)
 
     # Third container for inflation prediction
@@ -98,15 +98,15 @@ with col1:
 
     # Fourth container for average inflation per year bar chart
     with st.container():
-        st.subheader('Inflasi Rata-rata per Tahun')
+        st.subheader('Average Inflation per Year')
 
         # Calculate the average inflation per year
-        average_inflation_per_year = df.groupby('year')['data_inflasi'].mean().reset_index()
+        average_inflation_per_year = df.groupby('year')['inflation_data'].mean().reset_index()
 
         # Display a bar chart for average inflation per year
         fig, ax = plt.subplots(figsize=(10, 6))
-        sns.barplot(data=average_inflation_per_year, x='year', y='data_inflasi', ax=ax)
-        ax.set(title='Inflasi Rata-rata per Tahun', xlabel='Tahun', ylabel='Inflasi (%)')
+        sns.barplot(data=average_inflation_per_year, x='year', y='inflation_data', ax=ax)
+        ax.set(title='Average Inflation per Year', xlabel='Year', ylabel='Inflation (%)')
         st.pyplot(fig)
 
         # Convert the DataFrame to display arrows and colors
@@ -133,7 +133,7 @@ with col1:
 with col2:
     # Container for displaying the formatted DataFrame with arrows
     with st.container():
-        st.subheader("Data Inflasi per Tahun")
+        st.subheader("Inflation Data by Year")
 
         # Use st.write to render HTML content without index
         st.write(df_with_arrows.to_html(escape=False, index=False), unsafe_allow_html=True)
