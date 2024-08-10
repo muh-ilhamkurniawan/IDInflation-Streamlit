@@ -133,9 +133,9 @@ with col1:
                 diff = df.iloc[row, i] - df.iloc[row-1, i]
                 value = df.iloc[row, i]
                 if diff > 0:
-                    df_arrows.at[row, col] = f'<span style="color:green;">{value:.2f}% ↑</span>'
+                    df_arrows.at[row, col] = f'<span style="color:red;">{value:.2f}% ↑</span>'
                 elif diff < 0:
-                    df_arrows.at[row, col] = f'<span style="color:red;">{value:.2f}% ↓</span>'
+                    df_arrows.at[row, col] = f'<span style="color:green;">{value:.2f}% ↓</span>'
                 else:
                     df_arrows.at[row, col] = f'<span style="color:gray;">{value:.2f}% →</span>'
         return df_arrows
