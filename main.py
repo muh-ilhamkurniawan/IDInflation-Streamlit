@@ -1,4 +1,5 @@
 from enum import auto
+from tkinter import Button
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,7 +7,7 @@ import seaborn as sns
 from prediction import predict_inflation
 
 # Set the page configuration for the Streamlit app
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(layout="wide")
 
 # Load the dataset from a CSV file
 df = pd.read_csv('data_inflasi_indonesia_clean.csv')
@@ -43,7 +44,45 @@ with col1:
         
         with col11:
             # Dropdown for selecting year
-            selected_year = st.selectbox('Inflation by Year', options=df['year'].unique())
+            st.markdown(
+                """
+                <style>
+                div[data-testid="stSelectbox"] > label {display: none;}  /* Menghilangkan label */
+                div[data-testid="stSelectbox"] > div {margin-top: -16px;} /* Mengurangi jarak atas */
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            selected_year = st.selectbox('', options=df['year'].unique())
+        with col12:
+            with st.popover("Inflation Prediction"):
+                # Third container for inflation prediction
+                with st.container():
+                    st.subheader("Inflation Prediction")
+
+                    # Input for selecting month
+                    month = st.selectbox(
+                        'Select Month',
+                        ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December']
+                    )
+
+                    # Convert month name to number
+                    month_to_num = {
+                        'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+                        'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+                    }
+                    month_num = month_to_num[month]
+
+                    # Input for entering year
+                    year = st.number_input('Enter Year', min_value=1900, max_value=2100, step=1, value=2024)
+
+                    # Predict inflation based on the selected month and year
+                    if st.button('Predict Inflation'):
+                        predicted_inflation = predict_inflation(year, month_num)
+                        st.write("Predicted inflation for")
+                        st.write(f"{month} - {year}: {predicted_inflation:.2f}%")
+
                 
         # Filter dataset based on selected year
         filtered_df = df[df['year'] == selected_year]
@@ -69,32 +108,6 @@ with col1:
                 ax.set(title='Inflation Over Time', xlabel='Month', ylabel='Inflation (%)')
                 st.pyplot(fig)
 
-    # Third container for inflation prediction
-    with st.container():
-        st.subheader("Inflation Prediction")
-
-        # Input for selecting month
-        month = st.selectbox(
-            'Select Month',
-            ['January', 'February', 'March', 'April', 'May', 'June', 
-            'July', 'August', 'September', 'October', 'November', 'December']
-        )
-
-        # Convert month name to number
-        month_to_num = {
-            'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
-            'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
-        }
-        month_num = month_to_num[month]
-
-        # Input for entering year
-        year = st.number_input('Enter Year', min_value=1900, max_value=2100, step=1, value=2024)
-
-        # Predict inflation based on the selected month and year
-        if st.button('Predict Inflation'):
-            predicted_inflation = predict_inflation(year, month_num)
-            st.write("Predicted inflation for")
-            st.write(f"{month} - {year}: {predicted_inflation:.2f}%")
 
     # Fourth container for average inflation per year bar chart
     with st.container():
