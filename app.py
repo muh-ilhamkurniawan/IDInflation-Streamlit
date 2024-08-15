@@ -1,10 +1,12 @@
 import streamlit as st
+from home import show_home
 
-# Membuat fungsi utama untuk navigasi
+# Set the page configuration for the Streamlit app
 st.set_page_config(layout="wide")
 
 def main():
-    st.title("Visualization of Indonesian Inflation Data")
+    # Set the title of the Streamlit app
+    st.title('Visualization of Indonesian Inflation Data')
 
     # Menyusun tombol navigasi dalam tiga kolom yang berjejer secara horizontal
     col1, col2, col3 = st.columns([2,1,1])
@@ -27,10 +29,6 @@ def main():
         show_page1()
 
 # Fungsi untuk menampilkan halaman
-def show_home():
-    st.header("Selamat Datang di Home")
-    st.write("Ini adalah halaman utama.")
-
 def show_page1():
     st.header("Ini adalah Page 1")
     st.write("Konten untuk halaman 1 ditampilkan di sini.")
