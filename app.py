@@ -9,14 +9,18 @@ def main():
     st.title('Visualization of Indonesian Inflation Data')
 
     # Menyusun tombol navigasi dalam tiga kolom yang berjejer secara horizontal
-    col1, col2, col3 = st.columns([2,1,1])
+    col1, col2, col3,col4 = st.columns([3,1,1,1])
 
     with col2:
         if st.button("Home", use_container_width=True):
             st.session_state["page"] = "Home"
 
     with col3:
-        if st.button("Comparison of Methods", use_container_width=True):
+        if st.button("Methods", use_container_width=True):
+            st.session_state["page"] = "Page 1"
+    
+    with col4:
+        if st.button("About", use_container_width=True):
             st.session_state["page"] = "Page 1"
 
     # Menampilkan konten berdasarkan pilihan
