@@ -6,10 +6,11 @@ st.set_page_config(layout="wide")
 
 def main():
     # Set the title of the Streamlit app
-    st.title('Visualization of Indonesian Inflation Data')
+    st.title('DASHBOARD - IDInflation')
+    # st.header('Indonesia Inflation Data ')
 
     # Menyusun tombol navigasi dalam tiga kolom yang berjejer secara horizontal
-    col1, col2, col3,col4 = st.columns([3,1,1,1])
+    col1, col2, col3,col4 = st.columns([4,1,1,1])
 
     with col2:
         if st.button("Home", use_container_width=True):

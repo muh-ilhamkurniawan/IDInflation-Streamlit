@@ -92,13 +92,13 @@ def show_home() :
             with col13:
                 # Display the filtered data in a table
                 with st.container():
-                    st.subheader('Inflation Data')
+                    st.subheader('Data')
                     st.table(filtered_df[['month_name', 'inflation_data']])
             
             with col14:
                 # Display a line chart of the filtered data
                 with st.container():
-                    st.subheader('Inflation Data Chart')
+                    st.subheader('Visualization')
                     fig, ax = plt.subplots(figsize=(10, 6))
                     sns.lineplot(data=filtered_df, x='month_name', y='inflation_data', ax=ax)
                     ax.set(title='Inflation Over Time', xlabel='Month', ylabel='Inflation (%)')
