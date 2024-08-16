@@ -116,6 +116,10 @@ def show_home() :
             fig, ax = plt.subplots(figsize=(10, 6))
             sns.barplot(data=average_inflation_per_year, x='year', y='inflation_data', ax=ax)
             ax.set(title='Average Inflation per Year', xlabel='Year', ylabel='Inflation (%)')
+
+            # Set rotation for x-axis labels
+            ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+
             st.pyplot(fig)
 
             # Convert the DataFrame to display arrows and colors
