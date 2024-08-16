@@ -102,6 +102,8 @@ def show_home() :
                     fig, ax = plt.subplots(figsize=(10, 6))
                     sns.lineplot(data=filtered_df, x='month_name', y='inflation_data', ax=ax)
                     ax.set(title='Inflation Over Time', xlabel='Month', ylabel='Inflation (%)')
+                    # Set rotation for x-axis labels
+                    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
                     st.pyplot(fig)
 
 
