@@ -1,5 +1,6 @@
 import streamlit as st
 from home import show_home
+from testing import show_testing
 
 # Set the page configuration for the Streamlit app
 st.set_page_config(layout="wide")
@@ -18,7 +19,7 @@ def main():
 
     with col3:
         if st.button("Methods", use_container_width=True):
-            st.session_state["page"] = "Page 1"
+            st.session_state["page"] = "Methods"
     
     with col4:
         if st.button("About", use_container_width=True):
@@ -30,14 +31,8 @@ def main():
 
     if st.session_state["page"] == "Home":
         show_home()
-    elif st.session_state["page"] == "Page 1":
-        show_page1()
-
-# Fungsi untuk menampilkan halaman
-def show_page1():
-    st.header("Ini adalah Page 1")
-    st.write("Konten untuk halaman 1 ditampilkan di sini.")
-
+    elif st.session_state["page"] == "Methods":
+        show_testing()
 
 if __name__ == "__main__":
     main()
