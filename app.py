@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 def main():
     # Set the title of the Streamlit app
     st.title('DASHBOARD - IDInflation')
-    # st.header('Indonesia Inflation Data ')
+    st.markdown("<h3 style='margin-top: -20px;'>Indonesia Inflation Data 2002-2024</h3>", unsafe_allow_html=True)
 
     # Menyusun tombol navigasi dalam tiga kolom yang berjejer secara horizontal
     col1, col2, col3,col4 = st.columns([4,1,1,1])
