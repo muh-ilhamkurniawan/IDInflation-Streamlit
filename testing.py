@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVR
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-def show_testing() :
+def show_testing():
     # Membuat folder 'models' jika belum ada
     os.makedirs('models', exist_ok=True)
 
@@ -47,7 +47,7 @@ def show_testing() :
     }
 
     # Train and evaluate models
-    results = {}
+    results = []
     for name, model in models.items():
         # Train the model
         model.fit(X_train, y_train)
@@ -61,24 +61,26 @@ def show_testing() :
         rmse = np.sqrt(mse)
         r2 = r2_score(y_test, y_pred)
         
-        # Store results
-        results[name] = {
+        # Store results in a list of dictionaries
+        results.append({
+            'Model': name,
             'MAE': mae,
             'MSE': mse,
             'RMSE': rmse,
             'R²': r2
-        }
+        })
         
         # Save model in 'models' folder
         model_filename = f'models/{name.lower().replace(" ", "_")}_model.pkl'
         joblib.dump(model, model_filename)
 
-    # Display results in Streamlit
-    st.title("Model Performance Comparison")
+    # Convert results to a DataFrame
+    results_df = pd.DataFrame(results)
 
+    # Display results in Streamlit as a table
+    st.title("Model Performance Comparison")
     st.write("### Metrics for Each Model:")
-    for name, metrics in results.items():
-        st.write(f"**{name}** - MAE: {metrics['MAE']:.4f}, MSE: {metrics['MSE']:.4f}, RMSE: {metrics['RMSE']:.4f}, R²: {metrics['R²']:.4f}")
+    st.table(results_df)
 
     # Example usage of models
     def predict_inflation(model_name, year, month):
@@ -98,11 +100,11 @@ def show_testing() :
         st.write(f"{name}: {predicted_inflation:.2f}%")
 
     # Plotting metrics
-    labels = list(results.keys())
-    mae_values = [results[label]['MAE'] for label in labels]
-    mse_values = [results[label]['MSE'] for label in labels]
-    rmse_values = [results[label]['RMSE'] for label in labels]
-    r2_values = [results[label]['R²'] for label in labels]
+    labels = results_df['Model']
+    mae_values = results_df['MAE']
+    mse_values = results_df['MSE']
+    rmse_values = results_df['RMSE']
+    r2_values = results_df['R²']
 
     x = np.arange(len(labels))  # the label locations
     width = 0.2  # the width of the bars
