@@ -79,8 +79,11 @@ def show_testing():
 
     # Display results in Streamlit as a table
     st.title("Model Performance Comparison")
-    st.write("### Metrics for Each Model:")
-    st.table(results_df)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Metrics for Each Model:")
+        st.table(results_df)
 
     # Example usage of models
     def predict_inflation(model_name, year, month):
@@ -124,6 +127,7 @@ def show_testing():
     ax.legend()
 
     fig.tight_layout()
-
-    # Display the plot in Streamlit
-    st.pyplot(fig)
+    with col2:
+        # Display the plot in Streamlit
+        st.subheader("Visualization")
+        st.pyplot(fig)
