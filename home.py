@@ -155,4 +155,8 @@ def show_home() :
             st.subheader("Inflation Data by Year")
 
             # Use st.write to render HTML content without index
-            st.write(df_with_arrows.to_html(escape=False, index=False), unsafe_allow_html=True)
+            renamed_df_with_arrows = df_with_arrows[['year', 'inflation_data']].rename(columns={
+                        'year': 'Year',
+                        'inflation_data': 'Inflation Rate (%)'
+                    })
+            st.write(renamed_df_with_arrows.to_html(escape=False, index=False), unsafe_allow_html=True)
