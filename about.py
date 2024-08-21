@@ -19,3 +19,11 @@ def show_about() :
             st.subheader('About Me')
         with st.container():
             st.subheader('Dataset')
+            df = pd.read_csv('data_inflasi_indonesia_clean.csv')
+            csv = df.to_csv(index=False)  # Convert DataFrame to CSV format
+            st.download_button(
+                label="Download Dataset",
+                data=csv,
+                file_name="data_inflasi_indonesia_clean.csv",
+                mime="text/csv", use_container_width=True
+            )
