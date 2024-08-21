@@ -1,6 +1,7 @@
 import streamlit as st
 from home import show_home
 from testing import show_testing
+from about import show_about
 
 # Set the page configuration for the Streamlit app
 st.set_page_config(layout="wide")
@@ -23,7 +24,7 @@ def main():
     
     with col4:
         if st.button("About", use_container_width=True):
-            st.session_state["page"] = "Page 1"
+            st.session_state["page"] = "About"
 
     # Menampilkan konten berdasarkan pilihan
     if "page" not in st.session_state:
@@ -33,6 +34,8 @@ def main():
         show_home()
     elif st.session_state["page"] == "Methods":
         show_testing()
+    elif st.session_state["page"] == "About":
+        show_about()
 
 if __name__ == "__main__":
     main()
