@@ -97,6 +97,7 @@ def show_home() :
                         'month_name': 'Month',
                         'inflation_data': 'Inflation Rate (%)'
                     })
+                    renamed_df['Inflation Rate (%)'] = renamed_df['Inflation Rate (%)'].apply(lambda x: f"{x:.2f}")
                     st.table(renamed_df)
             
             with col14:
