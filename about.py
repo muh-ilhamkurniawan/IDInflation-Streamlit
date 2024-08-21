@@ -18,6 +18,9 @@ def show_about() :
     with col2 :
         with st.container():
             st.subheader('About Me')
+            st.write("Hi there 👋 I am Muhammad Ilham Kurniawan")
+            if st.button('My Github', use_container_width=True):
+                webbrowser.open_new_tab("https://github.com/muh-ilhamkurniawan")
         with st.container():
             st.subheader('Dataset')
             df = pd.read_csv('data_inflasi_indonesia_clean.csv')
@@ -29,6 +32,6 @@ def show_about() :
                 mime="text/csv",
                 use_container_width=True
             )
-            st.markdown("<h5 style='text-align: center; margin-top: -10px;'>or</h5>", unsafe_allow_html=True)
+            st.markdown("<h6 style='text-align: center; margin-top: -10px; margin-bottom: -10px;'>or</h6>", unsafe_allow_html=True)
             if st.button('Go to Kaggle Dataset', use_container_width=True):
                 webbrowser.open_new_tab("https://www.kaggle.com/datasets/mikailnabiljordan/inflation-in-indonesia-from-2002-to-2024")
