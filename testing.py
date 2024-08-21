@@ -97,10 +97,24 @@ def show_testing():
     year_to_predict = st.number_input("Select Year to Predict:", min_value=2000, max_value=2050, value=2024)
     month_to_predict = st.number_input("Select Month to Predict:", min_value=1, max_value=12, value=5)
 
-    st.write("### Predicted Inflation:")
+    # Mengumpulkan prediksi dalam bentuk DataFrame
+    predictions = {
+        "Model": [],
+        "Predicted Inflation (%)": []
+    }
+
     for name in models.keys():
         predicted_inflation = predict_inflation(name, year_to_predict, month_to_predict)
-        st.write(f"{name}: {predicted_inflation:.2f}%")
+        predictions["Model"].append(name)
+        predictions["Predicted Inflation (%)"].append(f"{predicted_inflation:.2f}")
+
+    # Membuat DataFrame dari hasil prediksi
+    predictions_df = pd.DataFrame(predictions)
+
+    # Menampilkan DataFrame sebagai tabel di Streamlit
+    st.subheader("Predicted Inflation:")
+    st.table(predictions_df)
+
 
     # Plotting metrics
     labels = results_df['Model']
