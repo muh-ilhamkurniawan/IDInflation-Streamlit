@@ -93,7 +93,11 @@ def show_home() :
                 # Display the filtered data in a table
                 with st.container():
                     st.subheader('Data')
-                    st.table(filtered_df[['month_name', 'inflation_data']])
+                    renamed_df = filtered_df[['month_name', 'inflation_data']].rename(columns={
+                        'month_name': 'Month',
+                        'inflation_data': 'Inflation Rate (%)'
+                    })
+                    st.table(renamed_df)
             
             with col14:
                 # Display a line chart of the filtered data
