@@ -166,6 +166,10 @@ def show_home() :
                 <style>
                 table {
                     width: 100%;
+                    text-align: center;
+                }
+                th {
+                    text-align: center !important;
                 }
                 </style>
                 """, unsafe_allow_html=True
