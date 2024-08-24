@@ -31,7 +31,7 @@ def show_home() :
     df['month_name'] = df['month'].map(month_names)
 
     # Layout configuration with two columns
-    col1, col2 = st.columns([3, 1])
+    col1, col2 = st.columns([4, 1])
 
     with col1:
         # First container for year selection and data display
@@ -87,7 +87,7 @@ def show_home() :
             filtered_df = filtered_df.sort_values(by='inflation_period')
 
             # Second container for displaying data and graph
-            col13, col14 = st.columns([1, 2])
+            col13, col14 = st.columns([1, 3])
             
             with col13:
                 # Display the filtered data in a table
