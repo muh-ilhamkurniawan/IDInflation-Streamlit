@@ -1,11 +1,6 @@
-from enum import auto
-from tkinter import Button
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import webbrowser
-from prediction import predict_inflation
 
 
 def show_about() :
@@ -14,7 +9,9 @@ def show_about() :
         with st.container():
             st.subheader('About Dashboard')
         with st.container():
-            st.subheader('Model Performance Comparison')
+            st.subheader('Model Comparison')
+        with st.container():
+            st.subheader('Model evaluation methods')
     with col2 :
         with st.container():
             st.subheader('About Me')

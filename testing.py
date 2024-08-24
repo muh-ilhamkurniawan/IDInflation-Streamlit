@@ -85,6 +85,22 @@ def show_testing():
         st.subheader("Metrics for Each Model:")
         st.table(results_df)
 
+   # Daftar nama bulan
+    month_names = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    }
+
     # Example usage of models
     def predict_inflation(model_name, year, month):
         model_filename = f'models/{model_name.lower().replace(" ", "_")}_model.pkl'
@@ -95,7 +111,10 @@ def show_testing():
 
     # Example predictions
     year_to_predict = st.number_input("Select Year to Predict:", min_value=2000, max_value=2050, value=2024)
-    month_to_predict = st.number_input("Select Month to Predict:", min_value=1, max_value=12, value=5)
+    month_to_predict = st.selectbox("Select Month to Predict:", list(month_names.keys()))
+
+    # Mengonversi nama bulan menjadi angka
+    month_to_predict_num = month_names[month_to_predict]
 
     # Mengumpulkan prediksi dalam bentuk DataFrame
     predictions = {
@@ -104,17 +123,16 @@ def show_testing():
     }
 
     for name in models.keys():
-        predicted_inflation = predict_inflation(name, year_to_predict, month_to_predict)
+        predicted_inflation = predict_inflation(name, year_to_predict, month_to_predict_num)
         predictions["Model"].append(name)
         predictions["Predicted Inflation (%)"].append(f"{predicted_inflation:.2f}")
-
+    
     # Membuat DataFrame dari hasil prediksi
     predictions_df = pd.DataFrame(predictions)
 
     # Menampilkan DataFrame sebagai tabel di Streamlit
     st.subheader("Predicted Inflation:")
     st.table(predictions_df)
-
 
     # Plotting metrics
     labels = results_df['Model']
@@ -142,6 +160,7 @@ def show_testing():
 
     fig.tight_layout()
     with col2:
-        # Display the plot in Streamlit
-        st.subheader("Visualization")
-        st.pyplot(fig)
+        with st.container():
+            # Display the plot in Streamlit
+            st.subheader("Visualization")
+            st.pyplot(fig)
