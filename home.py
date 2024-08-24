@@ -160,4 +160,17 @@ def show_home() :
                         'year': 'Year',
                         'inflation_data': 'Inflation Rate (%)'
                     })
+            # Menambahkan gaya CSS untuk membuat tabel menjadi full-width
+            st.markdown(
+                """
+                <style>
+                table {
+                    width: 100%;
+                }
+                </style>
+                """, unsafe_allow_html=True
+            )
+
+            # Menampilkan tabel dengan full-width
             st.write(renamed_df_with_arrows.to_html(escape=False, index=False), unsafe_allow_html=True)
+
