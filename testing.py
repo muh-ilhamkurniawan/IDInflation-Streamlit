@@ -80,6 +80,8 @@ def show_testing():
     # Display results in Streamlit as a table
     st.title("Model Performance Comparison")
     col1, col2 = st.columns(2)
+    col3, col4 = st.columns(2)
+    col5, col6 = st.columns(2)
 
     with col1:
         st.subheader("Metrics for Each Model:")
@@ -110,8 +112,12 @@ def show_testing():
         return prediction[0]
 
     # Example predictions
-    year_to_predict = st.number_input("Select Year to Predict:", min_value=2000, max_value=2050, value=2024)
-    month_to_predict = st.selectbox("Select Month to Predict:", list(month_names.keys()))
+    with col3 :
+        st.subheader("Predicted Inflation:")
+    with col5 :
+        
+        year_to_predict = st.number_input("Select Year to Predict:", min_value=2000, max_value=2050, value=2024)
+        month_to_predict = st.selectbox("Select Month to Predict:", list(month_names.keys()))
 
     # Mengonversi nama bulan menjadi angka
     month_to_predict_num = month_names[month_to_predict]
@@ -130,9 +136,10 @@ def show_testing():
     # Membuat DataFrame dari hasil prediksi
     predictions_df = pd.DataFrame(predictions)
 
-    # Menampilkan DataFrame sebagai tabel di Streamlit
-    st.subheader("Predicted Inflation:")
-    st.table(predictions_df)
+    with col6 :
+        # Menampilkan DataFrame sebagai tabel di Streamlit
+        
+        st.table(predictions_df)
 
     # Plotting metrics
     labels = results_df['Model']
