@@ -98,7 +98,22 @@ def show_home() :
                         'inflation_data': 'Inflation Rate (%)'
                     })
                     renamed_df['Inflation Rate (%)'] = renamed_df['Inflation Rate (%)'].apply(lambda x: f"{x:.2f}")
-                    st.table(renamed_df)
+                    st.markdown(
+                        """
+                        <style>
+                        table {
+                            width: 100%;
+                            text-align: center;
+                        }
+                        th {
+                            text-align: center !important;
+                        }
+                        </style>
+                        """, unsafe_allow_html=True
+                    )
+
+                    # Menampilkan tabel dengan full-width
+                    st.write(renamed_df.to_html(escape=False, index=False), unsafe_allow_html=True)
             
             with col14:
                 # Display a line chart of the filtered data
